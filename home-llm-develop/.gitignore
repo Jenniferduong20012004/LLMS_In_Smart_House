@@ -1,0 +1,13 @@
+models/
+loras/
+core/
+config/
+.DS_Store
+data/*.json
+data/*.jsonl
+*.pyc
+main.log
+.venv
+*.xlsx
+notes.txt
+runpod_bootstrap.sh

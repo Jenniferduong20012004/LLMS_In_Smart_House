@@ -1,0 +1,56 @@
+# TODO
+- [x] support new LLM APIs  
+    - rewrite how services are called  
+    - handle no API selected  
+    - rewrite prompts + service block formats  
+    - implement new LLM API that has `HassCallService` so old models can still work  
+- [ ] update dataset so new models will work with the API  
+- [ ] make ICL examples into conversation turns  
+- [ ] translate ICL examples + make better ones  
+- [x] areas/room support  
+- [x] convert requests to aiohttp  
+- [x] detection/mitigation of too many entities being exposed & blowing out the context length  
+- [ ] figure out DPO to improve response quality  
+- [x] setup github actions to build wheels that  are optimized for RPIs
+- [x] mixtral + prompting (no fine tuning)  
+    - add in context learning variables to sys prompt template
+    - add new options to setup process for setting prompt style + picking fine-tuned/ICL  
+- [x] prime kv cache with current "state" so that requests are faster  
+- [x] ChatML format (actually need to add special tokens)  
+- [x] Vicuna dataset merge (yahma/alpaca-cleaned)  
+- [x] Phi-2 fine tuning  
+- [x] Quantize /w llama.cpp  
+- [x] Make custom component use llama.cpp + ChatML  
+- [x] Continued synthetic dataset improvements (there are a bunch of TODOs in there)  
+- [x] Licenses + Attributions  
+- [x] Finish Readme/docs for initial release  
+- [x] Function calling as JSON  
+- [x] Fine tune Phi-1.5 version  
+- [x] make llama-cpp-python wheels for "llama-cpp-python>=0.2.24"  
+- [x] make a proper evaluation framework to run. not just loss. should test accuracy on the function calling  
+- [x] add more remote backends  
+    - LocalAI (openai compatible)  
+    - Ollama  
+    - support chat completions API (might fix Ollama + adds support for text-gen-ui characters)
+- [x] more config options for prompt template (allow other than chatml)  
+- [x] publish snapshot of dataset on HF  
+- [x] use varied system prompts to add behaviors  
+
+
+## more complicated ideas
+- [ ] "context requests"  
+    - basically just let the model decide what RAG/extra context it wants  
+    - the model predicts special tokens as the first few tokens of its output  
+    - the requested content is added to the context after the request tokens and then generation continues  
+    - needs more complicated training b/c multi-turn + there will be some weird masking going on for training the responses properly  
+- [ ] integrate with llava for checking camera feeds in home assistant
+    - can check still frames to describe what is there
+    - for remote backends that support images, could also support this
+    - depends on context requests because we don't want to feed camera feeds into the context every time
+- [ ] RAG for getting info for setting up new devices  
+    - set up vectordb  
+    - ingest home assistant docs  
+    - "context request" from above to initiate a RAG search  
+- [ ] train the model to respond to house events  
+    - present the model with an event + a "prompt" from the user of what you want it to do (i.e. turn on the lights when I get home = the model turns on lights when your entity presence triggers as being home)  
+    - basically lets you write automations in plain english  
